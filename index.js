@@ -43,6 +43,19 @@ async function run(){
             res.send(service)
            
         })
+        
+       
+        app.get('/reviewes',async(req,res)=>{
+            let query={};
+            if(req.query.email){
+                 query={
+                    email:req.query.email
+                 }
+            }
+             const cursor=reviwesCollection.find(query)
+             const reviewes=await cursor.toArray()
+             res.send(reviewes)
+        })
 
         app.post('/reviewes',async(req,res)=>{
             const reviwe=req.body;
