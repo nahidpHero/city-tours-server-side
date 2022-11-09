@@ -9,8 +9,7 @@ const { MongoClient, ServerApiVersion,ObjectId} = require('mongodb');
 //midelewere
 
 app.use(cors());
-app.use(express.json());
-
+app.use(express.json())
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.5gquyue.mongodb.net/?retryWrites=true&w=majority`;
@@ -21,6 +20,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         const serviceCollection=client.db('city-tours').collection('products')
+        const reviwesCollection=client.db('city-tours').collection('reviwes')
 
         app.get('/services',async(req,res)=>{
             const query={}
@@ -42,6 +42,13 @@ async function run(){
             const service=await serviceCollection.findOne(query);
             res.send(service)
            
+        })
+
+        app.post('/reviewes',async(req,res)=>{
+            const reviwe=req.body;
+            const result=await reviwesCollection.insertOne(reviwe)
+            res.send(result)
+
         })
 
        
