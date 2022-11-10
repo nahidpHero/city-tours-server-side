@@ -20,6 +20,7 @@ async function run(){
     try{
         const serviceCollection=client.db('city-tours').collection('products')
         const reviwesCollection=client.db('city-tours').collection('reviwes')
+        
 
         app.get('/services',async(req,res)=>{
             const query={}
@@ -27,6 +28,13 @@ async function run(){
             const services=await cursor.toArray()
             res.send(services)
         });
+
+        app.post('/services',async(req,res)=>{
+            const service=req.body;
+            const result=await serviceCollection.insertOne(service);
+            res.send(result)
+
+        })
 
         app.get('/limitservices',async (req,res)=>{
             const query={}
@@ -56,6 +64,7 @@ async function run(){
              res.send(reviewes)
         })
 
+
         app.post('/reviewes',async(req,res)=>{
             const reviwe=req.body;
             const result=await reviwesCollection.insertOne(reviwe)
@@ -63,12 +72,10 @@ async function run(){
 
         })
 
-        app.post('/service',async(req,res)=>{
-            const service=req.body;
-            const result=await serviceCollection.insertOne(service)
-            res.send(result)
 
-        })
+
+
+        
 
         app.get('/reviewes/:id',async(req,res)=>{
             const id=req.params.id;
