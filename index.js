@@ -13,7 +13,6 @@ app.use(express.json())
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.5gquyue.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -60,6 +59,13 @@ async function run(){
         app.post('/reviewes',async(req,res)=>{
             const reviwe=req.body;
             const result=await reviwesCollection.insertOne(reviwe)
+            res.send(result)
+
+        })
+
+        app.post('/service',async(req,res)=>{
+            const service=req.body;
+            const result=await serviceCollection.insertOne(service)
             res.send(result)
 
         })
