@@ -64,6 +64,21 @@ async function run(){
 
         })
 
+        app.get('/reviewes/:id',async(req,res)=>{
+            const id=req.params.id;
+            const query={_id:ObjectId(id)}
+            const reviwes=await reviwesCollection.findOne(query);
+            res.send(reviwes)
+
+        })
+
+        app.delete('/reviewes/:id',async(req,res)=>{
+            const id=req.params.id;
+            const query={_id:ObjectId(id)}
+            const result=await reviwesCollection.deleteOne(query)
+            res.send(result)
+        })
+
        
     }
     finally{
