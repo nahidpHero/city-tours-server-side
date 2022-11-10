@@ -36,6 +36,8 @@ async function run(){
 
         })
 
+        
+
         app.get('/limitservices',async (req,res)=>{
             const query={}
             const cursor=serviceCollection.find(query)
@@ -71,7 +73,7 @@ async function run(){
             res.send(result)
 
         })
-
+    
 
 
 
@@ -82,6 +84,20 @@ async function run(){
             const query={_id:ObjectId(id)}
             const reviwes=await reviwesCollection.findOne(query);
             res.send(reviwes)
+
+        })
+
+        app.patch('/reviewes/:id', async(req,res)=>{
+            const id=req.params.id;
+            const status=req.body.status;
+            const query={_id:ObjectId(id)}
+            const updatedDoc={
+                $set:{
+                    status:status
+                }
+            }
+           const result=await reviwesCollection.updateOne(query) 
+           res.send(result)
 
         })
 
